@@ -1,0 +1,87 @@
+type ApprovalForAll @entity(immutable: true) {
+  id: Bytes!
+  _owner: Bytes! # address
+  _operator: Bytes! # address
+  _approved: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CreateERC1155_v1 @entity(immutable: true) {
+  id: Bytes!
+  creator: Bytes! # address
+  name: String! # string
+  symbol: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SecondarySaleFees @entity(immutable: true) {
+  id: Bytes!
+  tokenId: BigInt! # uint256
+  recipients: [Bytes!]! # address[]
+  bps: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SignerAdded @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SignerRemoved @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferBatch @entity(immutable: true) {
+  id: Bytes!
+  _operator: Bytes! # address
+  _from: Bytes! # address
+  _to: Bytes! # address
+  _ids: [BigInt!]! # uint256[]
+  _values: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferSingle @entity(immutable: true) {
+  id: Bytes!
+  _operator: Bytes! # address
+  _from: Bytes! # address
+  _to: Bytes! # address
+  internal__id: BigInt! # uint256
+  _value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type URI @entity(immutable: true) {
+  id: Bytes!
+  _value: String! # string
+  internal__id: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
