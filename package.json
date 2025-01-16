@@ -16,6 +16,7 @@
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@wagmi/cli": "^2.1.22",
     "eslint": "^9.7.0",
     "eslint-plugin-svelte": "^2.36.0",
     "globals": "^15.0.0",
@@ -26,9 +27,12 @@
     "vite": "^5.4.11"
   },
   "dependencies": {
-    "@thirdweb-dev/sdk": "^4.0.99",
-    "@thirdweb-dev/wallets": "^2.5.39",
+    "@fontsource/chakra-petch": "^5.1.1",
+    "alchemy-sdk": "^3.5.0",
+    "bs58": "^6.0.0",
+    "ethers": "^6.13.5",
     "fetch": "^1.1.0",
-    "thirdweb": "^5.80.0"
+    "viem": "^2.22.3",
+    "wagmi": "^2.14.6"
   }
 }
