@@ -7,7 +7,16 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+		interface Platform {
+			env: {
+				COUNTER: DurableObjectNamespace;
+			};
+			context: {
+				waitUntil(promise: Promise): void;
+			};
+			caches: CacheStorage & { default: Cache }
+		}
 	}
 }
 
-export {};
+export { };
