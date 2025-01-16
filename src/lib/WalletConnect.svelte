@@ -7,7 +7,6 @@
   } from "wagmi/actions";
   import Modal from "./Modal.svelte";
   import {wagmiConfig} from "./wallet";
-  import {browser} from "$app/environment";
   import type {Connector} from "wagmi";
   import {onMount} from "svelte";
   import Ethereum from "./ethereum.svelte";
