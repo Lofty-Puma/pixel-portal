@@ -5,13 +5,13 @@ import { alchemy } from "./alchemy";
 
 export class NFTStore {
   // {owner: {chainId: {contractAddress: [OwnedNft]}}
-  store: SvelteMap<`0x${string}`, SvelteMap<number, SvelteMap<string, SvelteSet<OwnedNft>>>>;
+  store: SvelteMap<`0x${string}`, SvelteMap<number, SvelteMap<`0x${string}`, SvelteSet<OwnedNft>>>>;
 
   constructor() {
-    this.store = new SvelteMap<`0x${string}`, SvelteMap<number, SvelteMap<string, SvelteSet<OwnedNft>>>>();
+    this.store = new SvelteMap<`0x${string}`, SvelteMap<number, SvelteMap<`0x${string}`, SvelteSet<OwnedNft>>>>();
   }
 
-  private fetchOwnedNFTs(chainId: number, address: string): AsyncIterable<OwnedNft> {
+  private fetchOwnedNFTs(address: string, chainId: number): AsyncIterable<OwnedNft> {
     return alchemy.get(chainId)!.nft.getNftsForOwnerIterator(address, {
       pageSize: 100,
       orderBy: NftOrdering.TRANSFERTIME,
@@ -35,28 +35,31 @@ export class NFTStore {
     });
   }
 
+  // private  name(chainName:string) {
+
+  // }
+
+
   clear() {
     this.store.clear();
   }
 
-  async getOwnedNFTs(chainId: number, address: `0x${string}`): Promise<SvelteMap<string, SvelteSet<OwnedNft>>> {
-    console.log("get nfts for account", chainId, address)
-    if (this.store.get(address)?.has(chainId)) {
-      return this.store.get(address)!.get(chainId)!;
+  async getOwnedNFTs(ownerAddress: `0x${string}`, chainId: number): Promise<SvelteMap<string, SvelteSet<OwnedNft>>> {
+    if (this.store.get(ownerAddress)?.has(chainId)) {
+      return this.store.get(ownerAddress)!.get(chainId)!;
     }
 
-    if (!this.store.has(address)) {
-      this.store.set(address, new SvelteMap());
+    if (!this.store.has(ownerAddress)) {
+      this.store.set(ownerAddress, new SvelteMap());
     }
 
-    if (!this.store.get(address)?.has(chainId)) {
-      this.store.get(address)?.set(chainId, new SvelteMap());
+    if (!this.store.get(ownerAddress)?.has(chainId)) {
+      this.store.get(ownerAddress)?.set(chainId, new SvelteMap());
     }
-
     // address NFTs not found, fetch them
-    const ownedIterable = this.fetchOwnedNFTs(chainId, address);
+    const ownedIterable = this.fetchOwnedNFTs(ownerAddress, chainId);
     setTimeout(async () => {
-      const currentMap = this.store.get(address)!.get(chainId)!;
+      const currentMap = this.store.get(ownerAddress)!.get(chainId)!;
 
       for await (const item of ownedIterable) {
         const key = item.contract.address as `0x${string}`;
@@ -67,7 +70,7 @@ export class NFTStore {
         }
       }
     }, 0)
-    return this.store.get(address)!.get(chainId)!;
+    return this.store.get(ownerAddress)!.get(chainId)!;
   }
 }
 

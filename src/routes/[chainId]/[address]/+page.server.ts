@@ -1,3 +1,4 @@
+import type { Contract } from "$lib/contract";
 import {
   parallelAftermathBaseAbi,
   parallelAlphaAbi,
@@ -12,18 +13,19 @@ import {
   parallelEchoesBaseAbi,
   parallelLoreAbi,
   parallelPlanetfallAbi,
-  parallelPlanetfallBaseAbi
+  parallelPlanetfallBaseAbi,
+  pixelPortalBaseAbi
 } from "$lib/generated.js";
-import type { Abi } from "viem";
 import { base, mainnet } from "wagmi/chains";
 
-interface Contract {
-  abi: Abi;
-  chainId: number;
-  chainName: string;
-}
 
 const parallelAddresses: Map<string, Contract> = new Map([
+  ["0xDB12D698e0A96E7D7f3D9ec6BB697A4587E79865", {
+    // pixelPortal[base]
+    abi: pixelPortalBaseAbi,
+    chainId: base.id,
+    chainName: base.name,
+  }],
   ["0x0Fc3DD8C37880a297166BEd57759974A157f0E74", {
     // parallelAvatars
     abi: parallelAvatarsAbi,
@@ -108,8 +110,7 @@ const parallelAddresses: Map<string, Contract> = new Map([
     chainId: base.id,
     chainName: base.name,
   }],
-]
-);
+]);
 
 
 export async function load() {

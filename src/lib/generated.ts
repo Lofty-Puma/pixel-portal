@@ -8958,3 +8958,237 @@ export const parallelPlanetfallBaseConfig = {
   address: parallelPlanetfallBaseAddress,
   abi: parallelPlanetfallBaseAbi,
 } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// pixelPortal
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const pixelPortalAbi = [
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'recipient',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'totalTransfers',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'BulkTransferCompleted',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'recipient', internalType: 'address', type: 'address' },
+      {
+        name: 'contractAddresses',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+      { name: 'packedData', internalType: 'uint256[][]', type: 'uint256[][]' },
+      { name: 'valueSize', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'bulkTransferERC1155',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'recipient', internalType: 'address', type: 'address' },
+      {
+        name: 'contractAddresses',
+        internalType: 'address[]',
+        type: 'address[]',
+      },
+      { name: 'tokenIds', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+    name: 'bulkTransferERC721',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: '', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'onERC1155BatchReceived',
+    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'onERC1155Received',
+    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'address', type: 'address' },
+      { name: '', internalType: 'uint256', type: 'uint256' },
+      { name: '', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'onERC721Received',
+    outputs: [{ name: '', internalType: 'bytes4', type: 'bytes4' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'packedData', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: 'encoding', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'unpackData',
+    outputs: [
+      { name: 'tokenIds', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+    stateMutability: 'pure',
+  },
+] as const
+
+export const pixelPortalAddress =
+  '0x5390967cefE77730Dca5F21C8F7A33528d6C02f6' as const
+
+export const pixelPortalConfig = {
+  address: pixelPortalAddress,
+  abi: pixelPortalAbi,
+} as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// pixelPortal[base]
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const pixelPortalBaseAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'recipient',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'tokenAddresses',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+      {
+        name: 'packedData',
+        internalType: 'uint256[][]',
+        type: 'uint256[][]',
+        indexed: false,
+      },
+      {
+        name: 'encoding',
+        internalType: 'uint8',
+        type: 'uint8',
+        indexed: false,
+      },
+    ],
+    name: 'BulkTransferERC1155',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'recipient',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'tokenAddresses',
+        internalType: 'address[]',
+        type: 'address[]',
+        indexed: false,
+      },
+      {
+        name: 'tokenIds',
+        internalType: 'uint256[][]',
+        type: 'uint256[][]',
+        indexed: false,
+      },
+    ],
+    name: 'BulkTransferERC721',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'recipient', internalType: 'address', type: 'address' },
+      { name: 'tokenAddresses', internalType: 'address[]', type: 'address[]' },
+      { name: 'packedData', internalType: 'uint256[][]', type: 'uint256[][]' },
+      { name: 'encoding', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'bulkTransferERC1155',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'tokenAddresses', internalType: 'address[]', type: 'address[]' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+      { name: 'tokenIds', internalType: 'uint256[][]', type: 'uint256[][]' },
+    ],
+    name: 'bulkTransferERC721',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'packedData', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: 'encoding', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'unpackData',
+    outputs: [
+      { name: 'tokenIds', internalType: 'uint256[]', type: 'uint256[]' },
+      { name: 'amounts', internalType: 'uint256[]', type: 'uint256[]' },
+    ],
+    stateMutability: 'pure',
+  },
+] as const
+
+export const pixelPortalBaseAddress =
+  '0xDB12D698e0A96E7D7f3D9ec6BB697A4587E79865' as const
+
+export const pixelPortalBaseConfig = {
+  address: pixelPortalBaseAddress,
+  abi: pixelPortalBaseAbi,
+} as const

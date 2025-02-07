@@ -67,7 +67,6 @@
     style="background-image: url({nft.image.originalUrl})"
     aria-label={nft.name}
   >
-    <!-- <img src={nft.image.originalUrl} alt={nft.name} /> -->
     <div class="info-overlay {quantity > 0 ? 'selected' : ''}">
       <div class="network-icon">
         {#if chainId == 1}
@@ -224,7 +223,7 @@
     border-radius: 4px;
     z-index: 20;
     text-align: center;
-    padding: 0.25em;
+    padding: 0.25em 0.75em;
     font-size: larger;
     font-weight: bolder;
   }

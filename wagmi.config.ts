@@ -12,6 +12,16 @@ interface Contract {
 
 const contracts: Contract[] = [
   {
+    name: "pixelPortal",
+    address: "0x5390967cefE77730Dca5F21C8F7A33528d6C02f6",
+    chain: mainnet,
+  },
+  {
+    name: "pixelPortal[base]",
+    address: "0xDB12D698e0A96E7D7f3D9ec6BB697A4587E79865",
+    chain: base,
+  },
+  {
     name: "parallelAvatars",
     address: "0x0Fc3DD8C37880a297166BEd57759974A157f0E74",
     chain: mainnet,

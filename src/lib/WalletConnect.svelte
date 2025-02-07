@@ -1,12 +1,15 @@
 <script lang="ts">
-  import {
-    getConnectors,
-    switchChain,
-    type GetBalanceReturnType,
-    type GetConnectionsReturnType,
-  } from "wagmi/actions";
+  import {getConnectors, switchChain} from "wagmi/actions";
   import Modal from "./Modal.svelte";
-  import {wagmiConfig} from "./wallet";
+  import {
+    activeConnectors,
+    address,
+    avatarUrl,
+    balance,
+    chainId,
+    ensName,
+    wagmiConfig,
+  } from "./wallet";
   import type {Connector} from "wagmi";
   import {onMount} from "svelte";
   import Ethereum from "./ethereum.svelte";
@@ -14,26 +17,11 @@
   import {base, mainnet} from "viem/chains";
 
   interface Props {
-    chainId: number | undefined;
-    ensName: string | null;
-    address: `0x${string}` | undefined;
-    avatarUrl: string | null;
-    balance: GetBalanceReturnType | undefined;
-    activeConnectors: GetConnectionsReturnType;
     connect: (connector: Connector) => Promise<void>;
     disconnect: (connector: Connector) => Promise<void>;
   }
 
-  let {
-    chainId = $bindable(),
-    ensName = $bindable(),
-    address = $bindable(),
-    avatarUrl = $bindable(),
-    balance = $bindable(),
-    activeConnectors = $bindable(),
-    connect,
-    disconnect,
-  }: Props = $props();
+  let {connect, disconnect}: Props = $props();
 
   let showModal = $state(false);
   let copied = $state(false);
@@ -54,11 +42,11 @@
 </script>
 
 <button id="connect-button" onclick={() => (showModal = true)}>
-  {#if activeConnectors.length > 0}
+  {#if $address}
     <div>
-      {ensName ||
-        `${address?.substring(0, 5)}...${address?.substring(address.length - 5)}`}{!!balance
-        ? ` - ${Number(BigInt(balance?.value) / 10n ** BigInt(balance?.decimals - 2)) / 10 ** 2}`
+      {$ensName ||
+        `${$address?.substring(0, 5)}...${$address?.substring($address.length - 5)}`}{!!$balance
+        ? ` - ${Number(BigInt($balance?.value) / 10n ** BigInt($balance?.decimals - 2)) / 10 ** 2}`
         : ""} ETH
     </div>
   {:else if !showModal}
@@ -70,20 +58,20 @@
 
 <Modal bind:showModal>
   {#snippet header()}
-    {#if activeConnectors.length > 0}
+    {#if $activeConnectors.length > 0}
       <div id="header">
         <button
           onclick={async (e) => {
             e.preventDefault();
             let r = await switchChain(wagmiConfig, {
-              chainId: chainId == mainnet.id ? base.id : mainnet.id,
+              chainId: $chainId == mainnet.id ? base.id : mainnet.id,
             });
             console.log(r);
           }}
         >
-          {#if chainId == mainnet.id}
+          {#if $chainId == mainnet.id}
             <Ethereum />
-          {:else if chainId == base.id}
+          {:else if $chainId == base.id}
             <Base />
           {/if}
         </button>
@@ -102,20 +90,20 @@
     {/if}
   {/snippet}
   <div id="modal">
-    {#if activeConnectors.length > 0}
+    {#if $activeConnectors.length > 0}
       <div>
-        {#if avatarUrl}
-          <img src={avatarUrl} alt={ensName} />
+        {#if $avatarUrl}
+          <img src={$avatarUrl} alt={$ensName} />
         {/if}
         <h3>
-          {ensName ||
-            `${address?.substring(0, 5)}...${address?.substring(address.length - 5)}`}
+          {$ensName ||
+            `${$address?.substring(0, 5)}...${$address?.substring($address.length - 5)}`}
           <button
             class="copy"
             class:copied
             onclick={async (e) => {
               e.preventDefault();
-              await navigator.clipboard.writeText(address!);
+              await navigator.clipboard.writeText($address!);
               copied = true;
               setTimeout(() => {
                 copied = false;
@@ -125,17 +113,16 @@
             <span class="material-symbols-outlined">content_copy</span>
           </button>
         </h3>
-        {#if !!balance}
+        {#if !!$balance}
           <span
             >{Number(
-              BigInt(balance?.value) / 10n ** BigInt(balance?.decimals - 2)
+              BigInt($balance?.value) / 10n ** BigInt($balance?.decimals - 2)
             ) /
               10 ** 2} ETH</span
           >
         {/if}
       </div>
-      {#each activeConnectors as connection}
-        <!-- {#if connection.connector.icon} -->
+      {#each $activeConnectors as connection}
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div class="connector" onclick={() => disconnect(connection.connector)}>
@@ -149,7 +136,6 @@
             <div class="injected disconnect"></div>
           {/if}
         </div>
-        <!-- {/if} -->
       {/each}
     {:else}
       {#each connectors as connector}
@@ -169,7 +155,7 @@
   </div>
   {#snippet footer()}
     <div id="footer">
-      {#if activeConnectors.length == 0}
+      {#if $activeConnectors.length == 0}
         <span
           >Don't have a wallet?<a
             href="https://walletguide.walletconnect.network/"
@@ -184,7 +170,7 @@
 <style>
   #connect-button {
     font-family: "Chakra Petch", sans-serif;
-    background-color: rgb(19, 69, 184);
+    background-color: #1345b8;
     color: #dcdcdc;
     font-size: large;
     font-weight: bold;
@@ -196,7 +182,7 @@
   }
 
   #connect-button:hover {
-    background-color: rgb(5, 54, 169);
+    background-color: #0536a9;
   }
 
   #header {
@@ -218,12 +204,9 @@
   #header span {
     font-size: larger;
     font-weight: bolder;
-    /* flex: 2; */
   }
 
   #header button {
-    /* top: 16px;
-    right: 16px; */
     color: #dcdcdc;
     background-color: transparent;
     border: 0;
