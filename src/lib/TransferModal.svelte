@@ -308,18 +308,7 @@
                 mapped.values().toArray(),
                 0b0100,
               ],
-
               address: pixelPortal.get(chainId) as `0x${string}`,
-              accessList: [
-                {
-                  address: "0x4200000000000000000000000000000000000015",
-                  storageKeys: [
-                    "0x0000000000000000000000000000000000000000000000000000000000000003",
-                    "0x0000000000000000000000000000000000000000000000000000000000000007",
-                    "0x0000000000000000000000000000000000000000000000000000000000000001",
-                  ],
-                },
-              ],
             });
             console.log("simulation: ", sim);
             let hash = await writeContract(wagmiConfig, sim.request);
@@ -366,7 +355,7 @@
     }
 
     get complete(): boolean {
-      return true;
+      return !!confirmTab.transferHash;
     }
 
     constructor(
@@ -404,7 +393,7 @@
     content: Snippet<[nfts: SvelteMap<string, SvelteMap<OwnedNft, number>>]>;
 
     get complete(): boolean {
-      return this.previous.complete;
+      return !!this.transferHash;
     }
 
     constructor(
